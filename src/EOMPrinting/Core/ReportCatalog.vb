@@ -1,5 +1,13 @@
 Imports System.IO
 
+''' <summary>Which database a dataset reads from.</summary>
+Public Enum DataSourceKind
+    ''' <summary>SQL Server (rp-sql02, database Rinoldi).</summary>
+    Rinoldi
+    ''' <summary>The Access database J:\ACCESS\PackProd.mdb, used by the packing and production reports.</summary>
+    PackProd
+End Enum
+
 ''' <summary>One query that feeds a dataset in an RDLC report.</summary>
 Public NotInheritable Class ReportDataSet
 
@@ -17,6 +25,8 @@ Public NotInheritable Class ReportDataSet
     ''' </summary>
     Public Property MonthParameters As String() = Array.Empty(Of String)()
 
+    Public Property Source As DataSourceKind = DataSourceKind.Rinoldi
+
     Public Shared Function Proc(name As String, Optional dataSetName As String = "Main") As ReportDataSet
         Return New ReportDataSet With {
             .Name = dataSetName,
@@ -30,6 +40,15 @@ Public NotInheritable Class ReportDataSet
         Return New ReportDataSet With {
             .Name = dataSetName,
             .CommandText = $"SELECT * FROM dbo.{viewName}"
+        }
+    End Function
+
+    ''' <summary>A saved query or table in PackProd.mdb.</summary>
+    Public Shared Function AccessQuery(queryName As String, Optional dataSetName As String = "Main") As ReportDataSet
+        Return New ReportDataSet With {
+            .Name = dataSetName,
+            .CommandText = $"SELECT * FROM [{queryName}]",
+            .Source = DataSourceKind.PackProd
         }
     End Function
 
@@ -107,14 +126,15 @@ Public Module ReportCatalog
         Dim list As New List(Of ReportDefinition)
 
         ' ---------- EOM: Packing and Production ----------
-        ' The four marked "Access" read J:\ACCESS\PackProd.mdb in the old app. Their data source is still to be decided.
-        list.Add(Report("EOM", PP, "Packing Stocks Detail", "PackingStocksDetail.rpt", none)) ' Access: ut_rptPackStockDetailMTD
-        list.Add(Report("EOM", PP, "Packing Stocks", "TotalPackedStock.rpt", none))          ' Access: qryPackST + ut_rptPackingStocksTotals
+        ' Packing Stocks Detail, Packing Stocks, MTD Production and Production Summary read the Access database PackProd.mdb.
+        ' Unpacked was dropped: no longer needed.
+        list.Add(Report("EOM", PP, "Packing Stocks Detail", "PackingStocksDetail.rpt", none, ReportDataSet.AccessQuery("ut_rptPackStockDetailMTD")))
+        list.Add(Report("EOM", PP, "Packing Stocks", "TotalPackedStock.rpt", none,
+                   ReportDataSet.AccessQuery("qryPackST"), ReportDataSet.AccessQuery("ut_rptPackingStocksTotals", "Totals")))
         list.Add(Report("EOM", PP, "MTD Packing", "packingMTDAll.rpt", none, ReportDataSet.View("ut_rptPackingMTD")))
-        list.Add(Report("EOM", PP, "MTD Production", "ProdMTD.rpt", none))                   ' Access: ut_productionmtd
+        list.Add(Report("EOM", PP, "MTD Production", "ProdMTD.rpt", none, ReportDataSet.AccessQuery("ut_productionmtd")))
         list.Add(Report("EOM", PP, "Packing Summary", "PackingMTDSummary.rpt", none, ReportDataSet.View("ut_rptMTDPackingSummary")))
-        list.Add(Report("EOM", PP, "Production Summary", "MTDProdSummary.rpt", none))        ' Access: ut_MTDProdSummary
-        list.Add(Report("EOM", PP, "Unpacked", "Unpacked.rpt", none))                        ' .rpt not supplied yet
+        list.Add(Report("EOM", PP, "Production Summary", "MTDProdSummary.rpt", none, ReportDataSet.AccessQuery("ut_MTDProdSummary")))
         list.Add(Report("EOM", PP, "PackMat Detail", "Packing Material.rpt", none))          ' .rpt not supplied yet
 
         ' ---------- EOM: Debtors ----------
@@ -129,7 +149,9 @@ Public Module ReportCatalog
 
         ' ---------- EOM: Creditors ----------
         list.Add(Report("EOM", CR, "Cashbook MTD", "CashBookMTD.rpt", cur,
-                   ReportDataSet.Proc("spCashBookJrnMTD"), ReportDataSet.Proc("usp_TotalCancelledMTD", "Cancelled")))
+                   New ReportDataSet With {.CommandText = "spCashBookJrnMTD", .IsStoredProcedure = True,
+                                           .MonthParameters = {"@reportName"}},
+                   New ReportDataSet With {.Name = "Cancelled", .CommandText = "usp_TotalCancelledMTD", .IsStoredProcedure = True}))
         list.Add(Report("EOM", CR, "Unpresented Cheques", "UnpresentedCheques.rpt", none,
                    ReportDataSet.View("ut_unpresentedChq", "Unpresented"),
                    ReportDataSet.View("ut_ChequeNoPurchase", "NotPurchase"),

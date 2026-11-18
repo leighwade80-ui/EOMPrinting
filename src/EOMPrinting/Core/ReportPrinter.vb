@@ -1,4 +1,5 @@
 Imports System.Data
+Imports System.Data.OleDb
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Drawing.Printing
@@ -72,6 +73,8 @@ Public NotInheritable Class ReportPrinter
     ' ---------- Data ----------
 
     Private Shared Function LoadData(ds As ReportDataSet, period As MonthPeriod) As DataTable
+        If ds.Source = DataSourceKind.PackProd Then Return LoadAccessData(ds)
+
         Using conn As New SqlConnection(AppSettings.ConnectionString)
             Using cmd As New SqlCommand(ds.CommandText, conn)
                 cmd.CommandTimeout = 300
@@ -89,6 +92,17 @@ Public NotInheritable Class ReportPrinter
                 Return table
             End Using
         End Using
+    End Function
+
+    ''' <summary>Reads a saved query from PackProd.mdb. Needs the Microsoft Access Database Engine on the PC.</summary>
+    Private Shared Function LoadAccessData(ds As ReportDataSet) As DataTable
+        Dim table As New DataTable(ds.Name)
+        Using conn As New OleDbConnection(AppSettings.PackProdConnectionString)
+            Using adapter As New OleDbDataAdapter(ds.CommandText, conn)
+                adapter.Fill(table)
+            End Using
+        End Using
+        Return table
     End Function
 
     Private Shared Function MonthParameterValue(name As String, period As MonthPeriod) As Object
