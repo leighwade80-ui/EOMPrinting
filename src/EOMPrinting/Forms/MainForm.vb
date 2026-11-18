@@ -2,6 +2,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 
 ''' <summary>The opening menu: EOM, EOM2 or Close. Replaces frmMain.</summary>
+<System.ComponentModel.DesignerCategory("Code")>
 Public Class MainForm
     Inherits Form
 
