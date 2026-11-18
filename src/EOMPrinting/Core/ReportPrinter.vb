@@ -10,6 +10,7 @@ Imports Microsoft.Reporting.WinForms
 ''' <summary>
 ''' Fills an RDLC report from SQL Server and sends it straight to the printer,
 ''' landscape A4 and duplex, with no preview. This is what the old ViewReport sub did with Crystal.
+''' When OutputMode is "Pdf", it saves a PDF named after the report instead, with no prompt.
 ''' </summary>
 Public NotInheritable Class ReportPrinter
     Implements IDisposable
@@ -38,10 +39,34 @@ Public NotInheritable Class ReportPrinter
             Next
 
             SetParameters(report, def, period)
+
+            If AppSettings.SaveAsPdf Then
+                SavePdf(report, def)
+                Return
+            End If
+
             RenderPages(report)
         End Using
 
         PrintPages(def.Title)
+    End Sub
+
+    ' ---------- PDF ----------
+
+    ''' <summary>Saves e.g. S:\EOM\Reports\20261119\CBPB.pdf, named after the old Crystal file. Overwrites a file from an earlier run today.</summary>
+    Private Shared Sub SavePdf(report As LocalReport, def As ReportDefinition)
+        Const deviceInfo =
+            "<DeviceInfo>" &
+            "<PageWidth>29.7cm</PageWidth><PageHeight>21cm</PageHeight>" &
+            "<MarginTop>1cm</MarginTop><MarginLeft>1cm</MarginLeft>" &
+            "<MarginRight>1cm</MarginRight><MarginBottom>1cm</MarginBottom>" &
+            "</DeviceInfo>"
+        Dim pdf = report.Render("PDF", deviceInfo)
+
+        Dim folder = AppSettings.PdfOutputFolder()
+        Directory.CreateDirectory(folder)
+        Dim fileName = Path.GetFileNameWithoutExtension(def.OldFile) & ".pdf"
+        File.WriteAllBytes(Path.Combine(folder, fileName), pdf)
     End Sub
 
     ' ---------- Data ----------

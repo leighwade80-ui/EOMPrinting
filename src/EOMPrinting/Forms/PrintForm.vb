@@ -118,7 +118,7 @@ Public Class PrintForm
         UseWaitCursor = True
         Try
             For Each def In selected
-                _status.Text = $"Printing {def.Title}..."
+                _status.Text = If(AppSettings.SaveAsPdf, $"Saving {def.Title}...", $"Printing {def.Title}...")
                 _status.Refresh()
                 Try
                     Dim period As MonthPeriod = Nothing
@@ -139,7 +139,10 @@ Public Class PrintForm
             _status.Text = ""
         End Try
 
-        If failures.Count = 0 Then
+        If failures.Count = 0 AndAlso AppSettings.SaveAsPdf Then
+            MessageBox.Show($"{_screen} reports saved to {AppSettings.PdfOutputFolder()}", "Printing Complete",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information)
+        ElseIf failures.Count = 0 Then
             MessageBox.Show($"{_screen} Printing is complete", "Printing Complete",
                             MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
