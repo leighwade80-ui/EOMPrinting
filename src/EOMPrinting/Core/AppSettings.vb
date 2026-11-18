@@ -14,6 +14,10 @@ Public NotInheritable Class AppSettings
 
     Public Shared Property ReportsFolder As String = "Reports"
 
+    ''' <summary>Access database used by the packing and production reports.</summary>
+    Public Shared Property PackProdConnectionString As String =
+        "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=J:\ACCESS\PackProd.mdb"
+
     ''' <summary>"Printer" prints to PrinterName. "Pdf" saves a PDF per report instead.</summary>
     Public Shared Property OutputMode As String = "Printer"
 
@@ -41,6 +45,7 @@ Public NotInheritable Class AppSettings
             ConnectionString = ReadString(root, "ConnectionString", ConnectionString)
             PrinterName = ReadString(root, "PrinterName", PrinterName)
             ReportsFolder = ReadString(root, "ReportsFolder", ReportsFolder)
+            PackProdConnectionString = ReadString(root, "PackProdConnectionString", PackProdConnectionString)
             OutputMode = ReadString(root, "OutputMode", OutputMode)
             PdfFolder = ReadString(root, "PdfFolder", PdfFolder)
         End Using

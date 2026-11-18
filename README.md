@@ -35,10 +35,10 @@ A report shows as "(not rebuilt yet)" and can't be ticked until its `.rdlc` file
 
 | Report | Status |
 | --- | --- |
-| CashBook, Receipt Book, Petty Cash and Purchase Posting Blocks | Rebuilt as one shared layout (`PostingBlock.rdlc`). Prints; data still to be checked. |
-| EFT Transfer, Petty Cash Journal, MTD Packing, Packing Summary | Rebuilt. Needs checking against an old printout. |
-| Debtors Age Analysis, Creditors Age Analysis (EOM2) | Rebuilt. Needs checking against an old printout. |
-| Bank Transactions, Bank Reconciliation | Rebuilt. Needs checking against an old printout. |
-| All other reports | Not rebuilt yet |
+| All reports with a Crystal `.rpt` in the project | Rebuilt as `.rdlc`. Each needs checking against an old printout. |
+| PackMat Detail, Sales Report MTD, Expiring Discount Prices, Sales Report Costing | Not rebuilt: their `.rpt` files weren't supplied. |
+| Unpacked | Dropped (no longer needed). |
+
+The four packing and production reports (Packing Stocks Detail, Packing Stocks, MTD Production, Production Summary) read `J:\ACCESS\PackProd.mdb` through `PackProdConnectionString`. This needs the Microsoft Access Database Engine on the PC. If you get "provider is not registered", the installed engine is 32-bit: either install the 64-bit Access Database Engine, or add `<PlatformTarget>x86</PlatformTarget>` to `EOMPrinting.vbproj`.
 
 Open questions (missing `.rpt` files, the Access database reports, unused reports) are tracked in the project notes.

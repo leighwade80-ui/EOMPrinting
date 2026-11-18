@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.*" />
+    <PackageReference Include="System.Data.OleDb" Version="10.*" />
     <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.*" />
   </ItemGroup>
 
