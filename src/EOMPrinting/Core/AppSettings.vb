@@ -14,6 +14,23 @@ Public NotInheritable Class AppSettings
 
     Public Shared Property ReportsFolder As String = "Reports"
 
+    ''' <summary>"Printer" prints to PrinterName. "Pdf" saves a PDF per report instead.</summary>
+    Public Shared Property OutputMode As String = "Printer"
+
+    ''' <summary>Where PDFs go. Each run saves into a subfolder named after today's date (yyyyMMdd).</summary>
+    Public Shared Property PdfFolder As String = "S:\EOM\Reports"
+
+    Public Shared ReadOnly Property SaveAsPdf As Boolean
+        Get
+            Return String.Equals(OutputMode, "Pdf", StringComparison.OrdinalIgnoreCase)
+        End Get
+    End Property
+
+    ''' <summary>Today's PDF folder, e.g. S:\EOM\Reports\20261119.</summary>
+    Public Shared Function PdfOutputFolder() As String
+        Return IO.Path.Combine(PdfFolder, Date.Today.ToString("yyyyMMdd"))
+    End Function
+
     Private Sub New()
     End Sub
 
@@ -24,6 +41,8 @@ Public NotInheritable Class AppSettings
             ConnectionString = ReadString(root, "ConnectionString", ConnectionString)
             PrinterName = ReadString(root, "PrinterName", PrinterName)
             ReportsFolder = ReadString(root, "ReportsFolder", ReportsFolder)
+            OutputMode = ReadString(root, "OutputMode", OutputMode)
+            PdfFolder = ReadString(root, "PdfFolder", PdfFolder)
         End Using
 
         If String.IsNullOrWhiteSpace(ConnectionString) Then
