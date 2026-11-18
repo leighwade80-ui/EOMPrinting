@@ -33,7 +33,10 @@ A report shows as "(not rebuilt yet)" and can't be ticked until its `.rdlc` file
 
 | Report | Status |
 | --- | --- |
-| CashBook, Receipt Book, Petty Cash and Purchase Posting Blocks | Rebuilt as one shared layout (`PostingBlock.rdlc`). Needs checking against an old printout. |
+| CashBook, Receipt Book, Petty Cash and Purchase Posting Blocks | Rebuilt as one shared layout (`PostingBlock.rdlc`). Prints; data still to be checked. |
+| EFT Transfer, Petty Cash Journal, MTD Packing, Packing Summary | Rebuilt. Needs checking against an old printout. |
+| Debtors Age Analysis, Creditors Age Analysis (EOM2) | Rebuilt. Needs checking against an old printout. |
+| Bank Transactions, Bank Reconciliation | Rebuilt. Needs checking against an old printout. |
 | All other reports | Not rebuilt yet |
 
 Open questions (missing `.rpt` files, the Access database reports, unused reports) are tracked in the project notes.
