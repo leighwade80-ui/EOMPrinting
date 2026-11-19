@@ -94,10 +94,21 @@ Public NotInheritable Class ReportPrinter
         End Using
     End Function
 
-    ''' <summary>Reads a saved query from PackProd.mdb. Needs the Microsoft Access Database Engine on the PC.</summary>
+    ''' <summary>Reads a saved query from PackProd.mdb.</summary>
+    ''' <remarks>Uses the provider in PackProdConnectionString (ACE). If that engine isn't installed,
+    ''' falls back to the Jet 4.0 engine that comes with 32-bit Windows.</remarks>
     Private Shared Function LoadAccessData(ds As ReportDataSet) As DataTable
+        Try
+            Return FillAccess(ds, AppSettings.PackProdConnectionString)
+        Catch ex As InvalidOperationException When ex.Message.Contains("not registered", StringComparison.OrdinalIgnoreCase)
+            Dim jet As New OleDbConnectionStringBuilder(AppSettings.PackProdConnectionString) With {.Provider = "Microsoft.Jet.OLEDB.4.0"}
+            Return FillAccess(ds, jet.ConnectionString)
+        End Try
+    End Function
+
+    Private Shared Function FillAccess(ds As ReportDataSet, connectionString As String) As DataTable
         Dim table As New DataTable(ds.Name)
-        Using conn As New OleDbConnection(AppSettings.PackProdConnectionString)
+        Using conn As New OleDbConnection(connectionString)
             Using adapter As New OleDbDataAdapter(ds.CommandText, conn)
                 adapter.Fill(table)
             End Using

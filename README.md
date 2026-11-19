@@ -38,6 +38,6 @@ A report shows as "(not rebuilt yet)" and can't be ticked until its `.rdlc` file
 | Every report on the EOM and EOM2 screens | Rebuilt as `.rdlc`. Each needs checking against an old printout. |
 | Unpacked | Dropped (no longer needed). |
 
-The four packing and production reports (Packing Stocks Detail, Packing Stocks, MTD Production, Production Summary) read `J:\ACCESS\PackProd.mdb` through `PackProdConnectionString`. This needs the Microsoft Access Database Engine on the PC. If you get "provider is not registered", the installed engine is 32-bit: either install the 64-bit Access Database Engine, or add `<PlatformTarget>x86</PlatformTarget>` to `EOMPrinting.vbproj`.
+The four packing and production reports (Packing Stocks Detail, Packing Stocks, MTD Production, Production Summary) read `J:\ACCESS\PackProd.mdb` through `PackProdConnectionString`. The app is built as 32-bit (`<PlatformTarget>x86</PlatformTarget>`) so it can use the Access engine that comes with 32-bit Office. If that engine (ACE) isn't installed, it falls back to the Jet 4.0 engine built into Windows.
 
 Open questions (the Access database reports, unused reports) are tracked in the project notes.
