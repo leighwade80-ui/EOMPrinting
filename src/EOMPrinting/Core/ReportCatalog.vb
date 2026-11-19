@@ -135,7 +135,7 @@ Public Module ReportCatalog
         list.Add(Report("EOM", PP, "MTD Production", "ProdMTD.rpt", none, ReportDataSet.AccessQuery("ut_productionmtd")))
         list.Add(Report("EOM", PP, "Packing Summary", "PackingMTDSummary.rpt", none, ReportDataSet.View("ut_rptMTDPackingSummary")))
         list.Add(Report("EOM", PP, "Production Summary", "MTDProdSummary.rpt", none, ReportDataSet.AccessQuery("ut_MTDProdSummary")))
-        list.Add(Report("EOM", PP, "PackMat Detail", "Packing Material.rpt", none))          ' .rpt not supplied yet
+        list.Add(Report("EOM", PP, "PackMat Detail", "Packing Material.rpt", none, ReportDataSet.View("ut_EOM_PackMat")))
 
         ' ---------- EOM: Debtors ----------
         list.Add(Report("EOM", DR, "Receipt Book MTD", "ReceiptBookJournal.rpt", cur, ReportDataSet.Proc("spReceiptBookJrn")))
@@ -164,10 +164,10 @@ Public Module ReportCatalog
         list.Add(Report("EOM", CR, "Bank Transactions", "BankTransactionsMTD.rpt", none, ReportDataSet.View("ut_RptBankTransactionsMTD")))
         list.Add(Report("EOM", CR, "Bank Reconciliation", "BankReconciliation.rpt", none, ReportDataSet.View("ut_rptBankReconciliation")))
 
-        ' ---------- EOM: Sales (all three .rpt files not supplied yet) ----------
-        list.Add(Report("EOM", SA, "Sales Report MTD", "SalesReport.rpt", cur))
-        list.Add(Report("EOM", SA, "Expiring Discount Prices", "ExpiringPrices.rpt", none))
-        list.Add(Report("EOM", SA, "Sales Report Costing", "SalesReportCosting.rpt", cur))
+        ' ---------- EOM: Sales ----------
+        list.Add(Report("EOM", SA, "Sales Report MTD", "SalesReport.rpt", cur, ReportDataSet.Proc("usp_SalesReport")))
+        list.Add(Report("EOM", SA, "Expiring Discount Prices", "ExpiringPrices.rpt", none, ReportDataSet.View("ut_EOM_PricingExpiration")))
+        list.Add(Report("EOM", SA, "Sales Report Costing", "SalesReportCosting.rpt", cur, ReportDataSet.Proc("usp_SalesReport")))
 
         ' ---------- EOM2 ----------
         list.Add(Report("EOM2", CR, "Creditors Age Analysis", "CreditorsAgeAnalysisEOM2.rpt", none, ReportDataSet.View("ut_RptCAAEOM2")))
