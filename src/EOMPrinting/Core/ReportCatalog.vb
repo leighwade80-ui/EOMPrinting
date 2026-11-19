@@ -2,7 +2,7 @@ Imports System.IO
 
 ''' <summary>Which database a dataset reads from.</summary>
 Public Enum DataSourceKind
-    ''' <summary>SQL Server (rp-sql02, database Rinoldi).</summary>
+    ''' <summary>SQL Server (192.168.0.204,52149, database Rinoldi).</summary>
     Rinoldi
     ''' <summary>The Access database J:\ACCESS\PackProd.mdb, used by the packing and production reports.</summary>
     PackProd
