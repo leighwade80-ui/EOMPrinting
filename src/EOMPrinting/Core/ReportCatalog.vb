@@ -149,8 +149,7 @@ Public Module ReportCatalog
 
         ' ---------- EOM: Creditors ----------
         list.Add(Report("EOM", CR, "Cashbook MTD", "CashBookMTD.rpt", cur,
-                   New ReportDataSet With {.CommandText = "spCashBookJrnMTD", .IsStoredProcedure = True,
-                                           .MonthParameters = {"@reportName"}},
+                   ReportDataSet.Proc("spCashBookJrnMTD"),
                    New ReportDataSet With {.Name = "Cancelled", .CommandText = "usp_TotalCancelledMTD", .IsStoredProcedure = True}))
         list.Add(Report("EOM", CR, "Unpresented Cheques", "UnpresentedCheques.rpt", none,
                    ReportDataSet.View("ut_unpresentedChq", "Unpresented"),

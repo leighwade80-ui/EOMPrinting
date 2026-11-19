@@ -8,6 +8,8 @@
     <AssemblyName>EOMPrinting</AssemblyName>
     <StartupObject>EOMPrinting.Program</StartupObject>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <!-- 32-bit, so it can use the Access database engines installed for 32-bit Office and Windows (PackProd.mdb). -->
+    <PlatformTarget>x86</PlatformTarget>
     <OptionStrict>On</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
