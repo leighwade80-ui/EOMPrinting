@@ -5,6 +5,7 @@ Imports System.Windows.Forms
 ''' The EOM or EOM2 screen: a ticked box per report, grouped like the old form,
 ''' with Select All / Deselect All, Print and Close. Replaces frmEOM and frmEOM2.
 ''' </summary>
+<System.ComponentModel.DesignerCategory("Code")>
 Public Class PrintForm
     Inherits Form
 
