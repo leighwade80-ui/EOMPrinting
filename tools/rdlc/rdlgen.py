@@ -56,7 +56,7 @@ def F(name): return f"=Fields!{name}.Value"
 def olddate(name, sep=" "):
     """Date the way the Crystal reports printed it, e.g. 6 Nov 26 (always Sep, never Sept)."""
     v = f"Fields!{name}.Value"
-    return (f'=IIf(IsNothing({v}), "", Day({v}) & "{sep}" & Left(MonthName(Month({v})), 3) & "{sep}" & Format({v}, "yy"))')
+    return (f'=IIf(IsNothing({v}), "", Day({v}) & "{sep}" & MonthName(Month({v})).Substring(0, 3) & "{sep}" & Format({v}, "yy"))')
 def yes(f, word="Yes"): return f'=IIf(Fields!{f}.Value = True, "{word}", "")'
 
 def _total_row(cols, label, attr, bold=True, border="TopBorder", bg=None):

@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>bfc14d41-54b7-41af-81f2-3c301d747c99</rd:DataSourceID>
+      <rd:DataSourceID>cd68099a-0cf8-4c52-8034-14b29714466b</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -624,7 +624,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIf(IsNothing(Fields!INVOICEDate.Value), "", Day(Fields!INVOICEDate.Value) &amp; " " &amp; Left(MonthName(Month(Fields!INVOICEDate.Value)), 3) &amp; " " &amp; Format(Fields!INVOICEDate.Value, "yy"))</Value>
+                                  <Value>=IIf(IsNothing(Fields!INVOICEDate.Value), "", Day(Fields!INVOICEDate.Value) &amp; " " &amp; MonthName(Month(Fields!INVOICEDate.Value)).Substring(0, 3) &amp; " " &amp; Format(Fields!INVOICEDate.Value, "yy"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -908,7 +908,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIf(IsNothing(Fields!PaidDate.Value), "", Day(Fields!PaidDate.Value) &amp; " " &amp; Left(MonthName(Month(Fields!PaidDate.Value)), 3) &amp; " " &amp; Format(Fields!PaidDate.Value, "yy"))</Value>
+                                  <Value>=IIf(IsNothing(Fields!PaidDate.Value), "", Day(Fields!PaidDate.Value) &amp; " " &amp; MonthName(Month(Fields!PaidDate.Value)).Substring(0, 3) &amp; " " &amp; Format(Fields!PaidDate.Value, "yy"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1884,12 +1884,12 @@
                 <TablixMember>
                   <Group Name="Table42_Group">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!CUSTCODE.Value</GroupExpression>
+                      <GroupExpression>=Fields!OFFICE.Value &amp; "|" &amp; Fields!CUSTCODE.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=First(Fields!OFFICE.Value)</Value>
+                      <Value>=Fields!OFFICE.Value</Value>
                     </SortExpression>
                     <SortExpression>
                       <Value>=Fields!CUSTCODE.Value</Value>
@@ -2101,7 +2101,7 @@ End Function</Code>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>3d68d054-af0f-4409-94ff-9a898990026a</rd:ReportID>
+  <rd:ReportID>05e11b24-f447-4131-9318-c8d917abce54</rd:ReportID>
   
 
 </Report>

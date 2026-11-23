@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>47407ece-1360-48c8-8b69-1e507c8b1490</rd:DataSourceID>
+      <rd:DataSourceID>c9b2f086-db8e-4c35-bb64-366c5de5a915</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -784,7 +784,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIf(IsNothing(Fields!INVOICEDATE.Value), "", Day(Fields!INVOICEDATE.Value) &amp; "-" &amp; Left(MonthName(Month(Fields!INVOICEDATE.Value)), 3) &amp; "-" &amp; Format(Fields!INVOICEDATE.Value, "yy"))</Value>
+                                  <Value>=IIf(IsNothing(Fields!INVOICEDATE.Value), "", Day(Fields!INVOICEDATE.Value) &amp; "-" &amp; MonthName(Month(Fields!INVOICEDATE.Value)).Substring(0, 3) &amp; "-" &amp; Format(Fields!INVOICEDATE.Value, "yy"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -2473,7 +2473,7 @@
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>0ba52ec3-afae-4d2b-9a9d-b197154e4c7c</rd:ReportID>
+  <rd:ReportID>f06bd478-e842-436d-b47a-272c8bac3fd2</rd:ReportID>
   
 
 </Report>
