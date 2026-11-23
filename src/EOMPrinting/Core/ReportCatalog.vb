@@ -126,11 +126,12 @@ Public Module ReportCatalog
         Dim list As New List(Of ReportDefinition)
 
         ' ---------- EOM: Packing and Production ----------
-        ' Packing Stocks Detail, Packing Stocks, MTD Production and Production Summary read the Access database PackProd.mdb.
+        ' MTD Production and Production Summary read the Access database PackProd.mdb.
+        ' Packing Stocks Detail and Packing Stocks read SQL views, as the live S:\EOM reports do.
         ' Unpacked was dropped: no longer needed.
-        list.Add(Report("EOM", PP, "Packing Stocks Detail", "PackingStocksDetail.rpt", none, ReportDataSet.AccessQuery("ut_rptPackStockDetailMTD")))
+        list.Add(Report("EOM", PP, "Packing Stocks Detail", "PackingStocksDetail.rpt", none, ReportDataSet.View("ut_rptPackStockDetailMTD")))
         list.Add(Report("EOM", PP, "Packing Stocks", "TotalPackedStock.rpt", none,
-                   ReportDataSet.View("qryPackST")))
+                   ReportDataSet.View("ut_EOM_StockSummary"), ReportDataSet.View("ut_EOM_StockSummaryTotals", "Totals")))
         list.Add(Report("EOM", PP, "MTD Packing", "packingMTDAll.rpt", none, ReportDataSet.View("ut_rptPackingMTD")))
         list.Add(Report("EOM", PP, "MTD Production", "ProdMTD.rpt", none, ReportDataSet.AccessQuery("ut_productionmtd")))
         list.Add(Report("EOM", PP, "Packing Summary", "PackingMTDSummary.rpt", none, ReportDataSet.View("ut_rptMTDPackingSummary")))
