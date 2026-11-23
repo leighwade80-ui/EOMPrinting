@@ -18,3 +18,5 @@ packages/
 
 # Local settings override
 appsettings.Local.json
+
+__pycache__/

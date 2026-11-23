@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>507d9624-0134-4356-88c8-2d161329e0bf</rd:DataSourceID>
+      <rd:DataSourceID>e68bfb31-9382-4703-9a54-741be18d54e9</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -668,7 +668,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -704,7 +704,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1014,7 +1014,7 @@
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1055,7 +1055,7 @@
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1185,6 +1185,14 @@
                 </TablixMember>
                 <TablixMember>
                   <Group Name="MainTableDetails"/>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Date.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!ProdCode.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
@@ -1364,7 +1372,7 @@
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>98500ffb-e45c-40cc-855f-86c69412986b</rd:ReportID>
+  <rd:ReportID>1bcda98d-469e-4d79-b4cf-ab8f781a9549</rd:ReportID>
   
 
 </Report>

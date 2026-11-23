@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>69664b66-d1ed-4075-9bbb-bf0e43fcff78</rd:DataSourceID>
+      <rd:DataSourceID>ac5dd42d-7af4-45af-bce3-8af7984f0802</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -118,7 +118,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Gen Led</Value>
+                                  <Value>G/L</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -628,7 +628,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -664,7 +664,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -696,7 +696,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIf(Fields!Presented.Value = True, "Yes", "")</Value>
+                                  <Value>=Fields!Presented.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -969,7 +969,7 @@
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1010,7 +1010,7 @@
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1385,7 +1385,7 @@
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>f2f967ee-1085-45a3-98ef-23bba6d90358</rd:ReportID>
+  <rd:ReportID>a3778781-a436-4dfe-accb-e297d2f1518e</rd:ReportID>
   
 
 </Report>

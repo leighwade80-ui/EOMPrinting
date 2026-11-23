@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>ed38f010-4423-4b4a-a668-9fcefde6f9f5</rd:DataSourceID>
+      <rd:DataSourceID>59f0c421-cbd2-40e3-9144-210d2c8a1774</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -24,23 +24,47 @@
       </Query>
       <Fields>
         <Field Name="SALESCLAS">
-          <DataField>SALESCLAS</DataField>
+          <DataField>SalesClas</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="LENGTH">
-          <DataField>LENGTH</DataField>
+          <DataField>Length</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="STOCK">
-          <DataField>STOCK</DataField>
+          <DataField>Stock</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="CARTONS">
-          <DataField>CARTONS</DataField>
+          <DataField>Cartons</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="DOLLARS">
-          <DataField>DOLLARS</DataField>
+          <DataField>Dollars</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Totals">
+      <Query>
+        <DataSourceName>EOM</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Length">
+          <DataField>Length</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalCartons">
+          <DataField>TotalCartons</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalStock">
+          <DataField>TotalStock</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalDollars">
+          <DataField>TotalDollars</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -612,7 +636,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -894,7 +918,7 @@
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1181,7 +1205,7 @@
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1542,7 +1566,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!LENGTH.Value</Value>
+                                  <Value>=Fields!Length.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1577,7 +1601,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!CARTONS.Value)</Value>
+                                  <Value>=Fields!TotalCartons.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1613,7 +1637,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!STOCK.Value)</Value>
+                                  <Value>=Fields!TotalStock.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1649,11 +1673,11 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!DOLLARS.Value)</Value>
+                                  <Value>=Fields!TotalDollars.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1730,7 +1754,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!CARTONS.Value)</Value>
+                                  <Value>=Sum(Fields!TotalCartons.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1771,7 +1795,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!STOCK.Value)</Value>
+                                  <Value>=Sum(Fields!TotalStock.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1812,12 +1836,12 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!DOLLARS.Value)</Value>
+                                  <Value>=Sum(Fields!TotalDollars.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00</Format>
+                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1860,28 +1884,20 @@
               <TablixMembers>
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="Table_TPS_Totals_Length">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!LENGTH.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!LENGTH.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
+                  <Group Name="Table_TPS_Totals_Details"/>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>Main</DataSetName>
+            <DataSetName>Totals</DataSetName>
             <Top>4.05cm</Top>
-            <Left>0cm</Left>
-            <Height>1.6cm</Height>
+            <Left>0.0cm</Left>
+            <Height>1.60cm</Height>
             <Width>12.80cm</Width>
             <Style>
               <Border>
@@ -2062,7 +2078,7 @@ End Function</Code>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>1aa01407-bd9a-4d26-9bc8-a2075933c0ef</rd:ReportID>
+  <rd:ReportID>193d93d9-6aa1-4b58-b185-903ffb805633</rd:ReportID>
   
 
 </Report>
