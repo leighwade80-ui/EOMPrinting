@@ -38,6 +38,6 @@ A report shows as "(not rebuilt yet)" and can't be ticked until its `.rdlc` file
 | Every report on the EOM and EOM2 screens | Rebuilt as `.rdlc`. Each needs checking against an old printout. |
 | Unpacked | Dropped (no longer needed). |
 
-The four packing and production reports (Packing Stocks Detail, Packing Stocks, MTD Production, Production Summary) read `J:\ACCESS\PackProd.mdb` through `PackProdConnectionString`. PackProd.mdb is an Access 97 file, which the newer Access engine (ACE) can't open ("Cannot open a database created with a previous version"). So the connection uses the Jet 4.0 engine built into Windows, and the app is built as 32-bit (`<PlatformTarget>x86</PlatformTarget>`) because Jet only exists in 32-bit.
+Packing Stocks reads the `qryPackST` view on SQL Server. The other three packing and production reports (Packing Stocks Detail, MTD Production, Production Summary) read `J:\ACCESS\PackProd.mdb` through `PackProdConnectionString`. PackProd.mdb is an Access 97 file, which the newer Access engine (ACE) can't open ("Cannot open a database created with a previous version"). So the connection uses the Jet 4.0 engine built into Windows, and the app is built as 32-bit (`<PlatformTarget>x86</PlatformTarget>`) because Jet only exists in 32-bit.
 
 Open questions (the Access database reports, unused reports) are tracked in the project notes.
