@@ -34,7 +34,7 @@ Public NotInheritable Class ReportPrinter
             Dim fieldNames = ReadFieldNames(rdlcPath)
             For Each ds In def.DataSets
                 Dim table = LoadData(ds, period)
-                WidenSingleColumns(table)
+                FloatColumnsToDecimal(table)
                 Dim names As List(Of String) = Nothing
                 If fieldNames.TryGetValue(ds.Name, names) Then MatchColumnCase(table, names)
                 report.DataSources.Add(New ReportDataSource(ds.Name, table))
@@ -141,20 +141,36 @@ Public NotInheritable Class ReportPrinter
     ''' SQL column names don't always match the case used in the report (e.g. "description" vs "Description").
     ''' Rename columns so the report finds them.
     ''' </summary>
-    ' SQL "real" columns arrive as Single, which keeps only about 7 digits, so 251,200.02 prints as 251,200.00.
-    ' Crystal read them as Double, so widen them to Double to print the same cents.
-    Private Shared Sub WidenSingleColumns(table As DataTable)
-        For Each col In table.Columns.Cast(Of DataColumn)().Where(Function(c) c.DataType Is GetType(Single)).ToList()
+    ' SQL "real" and "float" columns arrive as Single and Double. Crystal printed them the way a person rounds:
+    ' 3,227.595 shows as 3,227.60. .NET formats the exact binary value (3,227.594999...) as 3,227.59, and a
+    ' Single keeps only about 7 digits (251,200.02 prints as 251,200.00). Converting them to Decimal (15
+    ' significant digits, then half away from zero) prints the same cents as the old reports.
+    Private Shared Sub FloatColumnsToDecimal(table As DataTable)
+        Dim floats = table.Columns.Cast(Of DataColumn)().
+            Where(Function(c) c.DataType Is GetType(Single) OrElse c.DataType Is GetType(Double)).ToList()
+        For Each col In floats
+            Dim values As New List(Of Object)
+            Try
+                For Each row As DataRow In table.Rows
+                    If row.IsNull(col) Then
+                        values.Add(DBNull.Value)
+                    Else
+                        values.Add(CDec(Convert.ToDouble(row(col))))
+                    End If
+                Next
+            Catch ex As OverflowException
+                Continue For ' too large for Decimal: leave the column as it is
+            End Try
             Dim name = col.ColumnName
             Dim ordinal = col.Ordinal
-            Dim wide As New DataColumn(name & "_wide", GetType(Double))
-            table.Columns.Add(wide)
-            For Each row As DataRow In table.Rows
-                If Not row.IsNull(col) Then row(wide) = CDbl(CSng(row(col)))
+            Dim dec As New DataColumn(name & "_dec", GetType(Decimal))
+            table.Columns.Add(dec)
+            For r = 0 To table.Rows.Count - 1
+                table.Rows(r)(dec) = values(r)
             Next
             table.Columns.Remove(col)
-            wide.ColumnName = name
-            wide.SetOrdinal(ordinal)
+            dec.ColumnName = name
+            dec.SetOrdinal(ordinal)
         Next
         table.AcceptChanges()
     End Sub
