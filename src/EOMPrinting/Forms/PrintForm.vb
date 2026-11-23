@@ -131,7 +131,7 @@ Public Class PrintForm
                     End If
                     ReportPrinter.Print(def, period)
                 Catch ex As Exception
-                    failures.Add($"{def.Title}: {ex.Message}")
+                    failures.Add($"{def.Title}: {FullMessage(ex)}")
                 End Try
             Next
         Finally
@@ -152,5 +152,17 @@ Public Class PrintForm
                             "Printing Problems", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
     End Sub
+
+    ' Report processing errors hide the real cause in InnerException ("An error occurred during local report
+    ' processing" on its own says nothing), so list every distinct message in the chain.
+    Private Shared Function FullMessage(ex As Exception) As String
+        Dim parts As New List(Of String)
+        Dim e = ex
+        While e IsNot Nothing
+            If Not parts.Contains(e.Message) Then parts.Add(e.Message)
+            e = e.InnerException
+        End While
+        Return String.Join(" ", parts)
+    End Function
 
 End Class

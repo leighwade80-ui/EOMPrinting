@@ -41,8 +41,8 @@ cols = [Col("Office", F("OFFICE"), 6.0), Col("Date", olddate("INVOICEDate"), 1.9
         Col("Status", F("Status"), 3.0), Col("PaidDate", olddate("PaidDate"), 1.9),
         Col("", "=" + newval, 2.2, "Right", MONEY, f"=Sum({newval})", group_total="")]
 t, h = tablix(cols, totals_label="Grand Total:", sort=["=Fields!INVOICEDate.Value", "=Fields!OFFICE.Value"],
-              group=dict(expr="=Fields!CUSTCODE.Value", label=None, footer_label="",
-                         sort=["=First(Fields!OFFICE.Value)", "=Fields!CUSTCODE.Value"]))
+              group=dict(expr='=Fields!OFFICE.Value & "|" & Fields!CUSTCODE.Value', label=None, footer_label="",
+                         sort=["=Fields!OFFICE.Value", "=Fields!CUSTCODE.Value"]))
 report(OUT, "DebtorsLedger.rdlc",
        {"Main": [("OFFICE", S), ("INVOICEDate", DT), ("INVOICENo", S), ("CUSTCODE", S), ("Value2", D), ("Discount", D),
                  ("Advertising", D), ("Freight", D), ("Status", S), ("PaidDate", DT)],
