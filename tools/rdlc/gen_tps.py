@@ -21,15 +21,17 @@ cols = [Col("Length", F("LENGTH"), 3.4),
 for c in cols:
     if c.header in ("Cartons", "Kilos", "Dollars"):
         c.group_total = c.total
+    c.total = None   # the live report has no grand total line; the Totals table below gives it
 t1, h1 = tablix(cols, name="Table_TPS", totals_label="Grand Total:", sort=["=Fields!LENGTH.Value"],
                 group=dict(expr="=Fields!SALESCLAS.Value", label="=Fields!SALESCLAS.Value", footer_label="Total:"))
 head2, top2 = section_heading("Totals", h1 + 0.6)
 # Long / Short totals from ut_EOM_StockSummaryTotals, as the live report's subreport.
-t2, h2 = tablix([Col("Length", F("Length"), 3.4, total=None),
-                 Col("Cartons", F("TotalCartons"), 2.8, "Right", INT, sumf("TotalCartons")),
-                 Col("Kilos", F("TotalStock"), 3.2, "Right", NUM, sumf("TotalStock")),
-                 Col("Dollars", F("TotalDollars"), 3.4, "Right", MONEY, sumf("TotalDollars"))],
-                ds="Totals", name="Table_TPS_Totals", top=top2, totals_label="Total")
+# The view already returns the "Total" row after Long and Short, so no sum row is added here.
+t2, h2 = tablix([Col("Length", F("Length"), 3.4),
+                 Col("Cartons", F("TotalCartons"), 2.8, "Right", INT),
+                 Col("Kilos", F("TotalStock"), 3.2, "Right", NUM),
+                 Col("Dollars", F("TotalDollars"), 3.4, "Right", MONEY)],
+                ds="Totals", name="Table_TPS_Totals", top=top2)
 report(OUT, "TotalPackedStock.rdlc",
        {"Main": [("SALESCLAS", S, "SalesClas"), ("LENGTH", S, "Length"), ("STOCK", D, "Stock"), ("CARTONS", D, "Cartons"),
                  ("DOLLARS", D, "Dollars")],

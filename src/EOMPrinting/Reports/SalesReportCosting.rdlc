@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>c0bbe89b-cb46-4a39-8e78-0c893c0ce07d</rd:DataSourceID>
+      <rd:DataSourceID>187fee92-3790-4942-8c05-9e4f46b7f91a</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -784,11 +784,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!INVOICEDATE.Value</Value>
+                                  <Value>=IIf(IsNothing(Fields!INVOICEDATE.Value), "", Day(Fields!INVOICEDATE.Value) &amp; "-" &amp; Left(MonthName(Month(Fields!INVOICEDATE.Value)), 3) &amp; "-" &amp; Format(Fields!INVOICEDATE.Value, "yy"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>dd/MM/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -965,7 +964,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>#,##0.##</Format>
+                                    <Format>0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1001,7 +1000,7 @@
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>#,##0.##</Format>
+                                    <Format>0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2474,7 +2473,7 @@
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>d981e717-7a83-4a9e-b302-50ce5a3e1ae8</rd:ReportID>
+  <rd:ReportID>19390e91-e004-47a3-b4a5-d1c15fa3fb4c</rd:ReportID>
   
 
 </Report>

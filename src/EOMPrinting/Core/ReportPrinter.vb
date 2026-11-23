@@ -34,6 +34,7 @@ Public NotInheritable Class ReportPrinter
             Dim fieldNames = ReadFieldNames(rdlcPath)
             For Each ds In def.DataSets
                 Dim table = LoadData(ds, period)
+                WidenSingleColumns(table)
                 Dim names As List(Of String) = Nothing
                 If fieldNames.TryGetValue(ds.Name, names) Then MatchColumnCase(table, names)
                 report.DataSources.Add(New ReportDataSource(ds.Name, table))
@@ -140,6 +141,24 @@ Public NotInheritable Class ReportPrinter
     ''' SQL column names don't always match the case used in the report (e.g. "description" vs "Description").
     ''' Rename columns so the report finds them.
     ''' </summary>
+    ' SQL "real" columns arrive as Single, which keeps only about 7 digits, so 251,200.02 prints as 251,200.00.
+    ' Crystal read them as Double, so widen them to Double to print the same cents.
+    Private Shared Sub WidenSingleColumns(table As DataTable)
+        For Each col In table.Columns.Cast(Of DataColumn)().Where(Function(c) c.DataType Is GetType(Single)).ToList()
+            Dim name = col.ColumnName
+            Dim ordinal = col.Ordinal
+            Dim wide As New DataColumn(name & "_wide", GetType(Double))
+            table.Columns.Add(wide)
+            For Each row As DataRow In table.Rows
+                If Not row.IsNull(col) Then row(wide) = CDbl(CSng(row(col)))
+            Next
+            table.Columns.Remove(col)
+            wide.ColumnName = name
+            wide.SetOrdinal(ordinal)
+        Next
+        table.AcceptChanges()
+    End Sub
+
     Private Shared Sub MatchColumnCase(table As DataTable, fieldNames As IEnumerable(Of String))
         For Each wanted In fieldNames
             Dim col = table.Columns.Cast(Of DataColumn)().

@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>9d876edb-0805-484f-bc0a-35eebf3cfca7</rd:DataSourceID>
+      <rd:DataSourceID>3e112189-b10b-44e3-983b-7135d037ffc1</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -802,7 +802,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!KG.Value)</Value>
+                                  <Value>=Format(Sum(Fields!KG.Value), "#,##0.00")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -843,7 +843,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Cartons.Value)</Value>
+                                  <Value>=Format(Sum(Fields!Cartons.Value), "#,##0.00")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1247,7 +1247,7 @@
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>fef765aa-5335-4c95-a092-0c3c1eedf02b</rd:ReportID>
+  <rd:ReportID>b84572db-ecfe-460a-ad8e-a6761876b5eb</rd:ReportID>
   
 
 </Report>
