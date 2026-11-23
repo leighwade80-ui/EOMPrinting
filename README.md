@@ -19,6 +19,12 @@ A VB.NET rebuild of Rinoldi Pasta's VB6 **EOM Printing** app. It prints the end-
 
 To edit a report layout in Visual Studio, install the **Microsoft RDLC Report Designer** extension.
 
+## Installing for everyone
+
+1. In Visual Studio, right-click the EOMPrinting project, choose **Publish**, pick **FolderProfile** and click **Publish**. The app is written to `src\EOMPrinting\bin\Publish`. It includes .NET, so the PCs don't need anything installed.
+2. Check `appsettings.json` in that folder. Set `OutputMode` to `Printer` to print on paper (leave `PrinterName` empty for the PC's default printer), or keep `Pdf` to save PDFs to `PdfFolder`.
+3. Copy the whole `Publish` folder to the share (for example `S:\EOM\App`) and give each user a shortcut to `EOMPrinting.exe` there. To update later, publish again and copy the folder over the old one while nobody has the app open.
+
 ## How it fits together
 
 | File | What it does |
