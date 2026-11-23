@@ -130,7 +130,7 @@ Public Module ReportCatalog
         ' Unpacked was dropped: no longer needed.
         list.Add(Report("EOM", PP, "Packing Stocks Detail", "PackingStocksDetail.rpt", none, ReportDataSet.AccessQuery("ut_rptPackStockDetailMTD")))
         list.Add(Report("EOM", PP, "Packing Stocks", "TotalPackedStock.rpt", none,
-                   ReportDataSet.AccessQuery("qryPackST"), ReportDataSet.AccessQuery("ut_rptPackingStocksTotals", "Totals")))
+                   ReportDataSet.View("qryPackST")))
         list.Add(Report("EOM", PP, "MTD Packing", "packingMTDAll.rpt", none, ReportDataSet.View("ut_rptPackingMTD")))
         list.Add(Report("EOM", PP, "MTD Production", "ProdMTD.rpt", none, ReportDataSet.AccessQuery("ut_productionmtd")))
         list.Add(Report("EOM", PP, "Packing Summary", "PackingMTDSummary.rpt", none, ReportDataSet.View("ut_rptMTDPackingSummary")))
