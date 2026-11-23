@@ -11,7 +11,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>83ce8f38-508f-4698-a016-343df8fc7b53</rd:DataSourceID>
+      <rd:DataSourceID>bfc14d41-54b7-41af-81f2-3c301d747c99</rd:DataSourceID>
     </DataSource>
   </DataSources>
   
@@ -624,11 +624,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!INVOICEDate.Value</Value>
+                                  <Value>=IIf(IsNothing(Fields!INVOICEDate.Value), "", Day(Fields!INVOICEDate.Value) &amp; " " &amp; Left(MonthName(Month(Fields!INVOICEDate.Value)), 3) &amp; " " &amp; Format(Fields!INVOICEDate.Value, "yy"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d MMM yy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -909,11 +908,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PaidDate.Value</Value>
+                                  <Value>=IIf(IsNothing(Fields!PaidDate.Value), "", Day(Fields!PaidDate.Value) &amp; " " &amp; Left(MonthName(Month(Fields!PaidDate.Value)), 3) &amp; " " &amp; Format(Fields!PaidDate.Value, "yy"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d MMM yy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1385,17 +1383,15 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIf(IsNothing(Fields!PaidDate.Value), Code.Nz(Fields!Value2.Value), 0D))</Value>
+                                  <Value/>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                    <Format>#,##0.00;(#,##0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1893,6 +1889,9 @@
                   </Group>
                   <SortExpressions>
                     <SortExpression>
+                      <Value>=First(Fields!OFFICE.Value)</Value>
+                    </SortExpression>
+                    <SortExpression>
                       <Value>=Fields!CUSTCODE.Value</Value>
                     </SortExpression>
                   </SortExpressions>
@@ -2102,7 +2101,7 @@ End Function</Code>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   
 
-  <rd:ReportID>a6a85870-3c5d-48b5-82bc-67c8c055929b</rd:ReportID>
+  <rd:ReportID>3d68d054-af0f-4409-94ff-9a898990026a</rd:ReportID>
   
 
 </Report>

@@ -9,10 +9,10 @@ QTY = "#,##0.##"
 sales_fields = [("INVOICENo", S), ("PRODCODE", S), ("WebDescription", S), ("INVOICEDATE", DT), ("UNITS", D), ("WGT", D),
                 ("KILOS", D), ("PRICE", D), ("VALUE", D), ("DISCOUNT", D), ("GST", D), ("DELIVERYPOINT", S), ("Month", S),
                 ("CusGroup", S), ("Office", S), ("Export", D), ("Cost", D), ("Margin", D), ("PctMargin", D, "% Margin")]
-lead = [Col("Invoice", F("INVOICENo"), 1.8), Col("Date", F("INVOICEDATE"), 1.9, fmt=DATE),
+lead = [Col("Invoice", F("INVOICENo"), 1.8), Col("Date", olddate("INVOICEDATE", "-"), 1.9),
         Col("Product", F("PRODCODE"), 1.8), Col("", F("WebDescription"), 4.4),
         Col("Delivery Point", F("DELIVERYPOINT"), 3.0), Col("Units", F("UNITS"), 1.4, "Right", QTY),
-        Col("Weight", F("WGT"), 1.6, "Right", QTY), Col("Kilos", F("KILOS"), 1.7, "Right", QTY),
+        Col("Weight", F("WGT"), 1.6, "Right", "0"), Col("Kilos", F("KILOS"), 1.7, "Right", "0"),
         Col("Price", F("PRICE"), 1.7, "Right", MONEY), Col("Value", F("VALUE"), 2.2, "Right", MONEY, sumf("VALUE"))]
 group = dict(expr='=IIf(IsNothing(Fields!CusGroup.Value), "Others", Fields!CusGroup.Value)',
              label="=Fields!Office.Value", footer_label="Totals:")

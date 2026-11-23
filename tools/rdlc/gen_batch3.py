@@ -31,17 +31,18 @@ simple("ReceiptBookJournal.rdlc",
 # ut_DebtorsLedgerTotals under Value/Discount/Advertising and the summed unpaid value in the last column.
 DL = "d MMM yy"
 newval = "IIf(IsNothing(Fields!PaidDate.Value), Code.Nz(Fields!Value2.Value), 0D)"
-cols = [Col("Office", F("OFFICE"), 6.0), Col("Date", F("INVOICEDate"), 1.9, fmt=DL), Col("Invoice", F("INVOICENo"), 1.8),
+cols = [Col("Office", F("OFFICE"), 6.0), Col("Date", olddate("INVOICEDate"), 1.9), Col("Invoice", F("INVOICENo"), 1.8),
         Col("Charge To", F("CUSTCODE"), 1.6, "Right"),
         Col("Value", F("Value2"), 2.4, "Right", MONEY, '=First(Fields!Value.Value, "Totals")',
             group_total=f"=Sum({newval})"),
         Col("Discount", F("Discount"), 2.2, "Right", MONEY, '=First(Fields!Discount.Value, "Totals")', group_total=sumf("Discount")),
         Col("Advertising", F("Advertising"), 2.2, "Right", MONEY, '=First(Fields!Advertising.Value, "Totals")', group_total=sumf("Advertising")),
         Col("Freight", F("Freight"), 2.0, "Right", MONEY, group_total=sumf("Freight")),
-        Col("Status", F("Status"), 3.0), Col("PaidDate", F("PaidDate"), 1.9, fmt=DL),
-        Col("", "=" + newval, 2.2, "Right", MONEY, f"=Sum({newval})")]
+        Col("Status", F("Status"), 3.0), Col("PaidDate", olddate("PaidDate"), 1.9),
+        Col("", "=" + newval, 2.2, "Right", MONEY, f"=Sum({newval})", group_total="")]
 t, h = tablix(cols, totals_label="Grand Total:", sort=["=Fields!INVOICEDate.Value", "=Fields!OFFICE.Value"],
-              group=dict(expr="=Fields!CUSTCODE.Value", label=None, footer_label=""))
+              group=dict(expr="=Fields!CUSTCODE.Value", label=None, footer_label="",
+                         sort=["=First(Fields!OFFICE.Value)", "=Fields!CUSTCODE.Value"]))
 report(OUT, "DebtorsLedger.rdlc",
        {"Main": [("OFFICE", S), ("INVOICEDate", DT), ("INVOICENo", S), ("CUSTCODE", S), ("Value2", D), ("Discount", D),
                  ("Advertising", D), ("Freight", D), ("Status", S), ("PaidDate", DT)],
@@ -157,7 +158,8 @@ report(OUT, "PurchaseJournal.rdlc",
 
 # ---------- Packing Stocks Detail (SQL view ut_rptPackStockDetailMTD, as the live report) ----------
 cols = [Col("PROD CODE", F("ProdCode"), 2.6), Col("DESCRIPTION", F("Description"), 7.5),
-        Col("KG", F("KG"), 2.6, "Right", "#,##0", sumf("KG")), Col("Units", F("Cartons"), 2.2, "Right", "#,##0", sumf("Cartons")),
+        Col("KG", F("KG"), 2.6, "Right", "#,##0", '=Format(Sum(Fields!KG.Value), "#,##0.00")'),
+        Col("Units", F("Cartons"), 2.2, "Right", "#,##0", '=Format(Sum(Fields!Cartons.Value), "#,##0.00")'),
         Col("Dollars", F("Dollars"), 3.0, "Right", MONEY, sumf("Dollars")), Col("Cost", F("Cost"), 3.0, "Right", MONEY, sumf("Cost")),
         Col("Margin", F("Margin"), 3.0, "Right", MONEY, sumf("Margin")),
         Col("Margin %", F("PctMargin"), 2.2, "Right", NUM, "=Avg(Fields!PctMargin.Value)")]

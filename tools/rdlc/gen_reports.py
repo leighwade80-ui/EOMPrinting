@@ -35,6 +35,10 @@ class Col:
         self.header, self.value, self.width, self.align, self.fmt, self.total = header, value, width, align, fmt, total
 
 def F(name): return f"=Fields!{name}.Value"
+def olddate(name, sep=" "):
+    """Date the way the Crystal reports printed it, e.g. 6 Nov 26 (always Sep, never Sept)."""
+    v = f"Fields!{name}.Value"
+    return (f'=IIf(IsNothing({v}), "", Day({v}) & "{sep}" & Left(MonthName(Month({v})), 3) & "{sep}" & Format({v}, "yy"))')
 def first(name, ds="Main"): return f'First(Fields!{name}.Value, "{ds}")'
 
 def tablix(cols, ds="Main", totals_label="Totals:", top=0.0, name="MainTable", sort=None):
@@ -165,7 +169,7 @@ simple("packingMTDAll.rdlc",
         ("PackMat", D), ("Press", S), ("DieCode", S), ("Month", S), ("CurrentMonth", S)],
        '="Packing For " & First(Fields!CurrentMonth.Value, "Main")',
        [Col("Product", F("ProdCode"), 2.4), Col("Description", F("DESCRIPTION"), 7.0),
-        Col("Quantity", F("Kilos"), 2.6, "Right", NUM, "=Sum(Fields!Kilos.Value)"), Col("Date", F("Date"), 2.4, fmt=DATE),
+        Col("Quantity", F("Kilos"), 2.6, "Right", "#,##0", "=Sum(Fields!Kilos.Value)"), Col("Date", olddate("Date"), 2.4),
         Col("Correction", F("Correction"), 2.4), Col("SRM $", F("SRMD"), 2.6, "Right", MONEY, "=Sum(Fields!SRMD.Value)"),
         Col("Packaging $", F("PackMat"), 2.8, "Right", MONEY, "=Sum(Fields!PackMat.Value)"),
         Col("Press", F("Press"), 2.0), Col("Die Code", F("DieCode"), 2.4)],
